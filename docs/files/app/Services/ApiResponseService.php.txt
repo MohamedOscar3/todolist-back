@@ -11,12 +11,6 @@ class ApiResponseService implements ApiResponseInterface
 {
     /**
      * Send success error response
-     *
-     * @param string                        $message
-     * @param int                           $code
-     * @param array|Collection|JsonResource $data
-     *
-     * @return JsonResponse
      */
     public function success(string $message, int $code = 200, Collection|JsonResource|array $data = []): JsonResponse
     {
@@ -28,12 +22,6 @@ class ApiResponseService implements ApiResponseInterface
 
     /**
      * Send Error Json response
-     *
-     * @param string                        $message
-     * @param int                           $code
-     * @param array|Collection|JsonResource $data
-     *
-     * @return JsonResponse
      */
     public function error(string $message, int $code = 500, array|Collection|JsonResource $data = []): JsonResponse
     {

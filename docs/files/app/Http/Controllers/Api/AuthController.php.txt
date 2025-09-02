@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Api\ApiResponseInterface;
+use App\Dtos\User\CreateUserDto;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Auth\LoginRequest;
+use App\Http\Requests\Api\Auth\RegisterRequest;
+use App\Http\Resources\Api\UserResource;
+use App\Models\User;
+use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+
+class AuthController extends Controller
+{
+    public function __construct(
+        private readonly UserService $userService,
+        private readonly ApiResponseInterface $response
+    ) {}
+
+    /**
+     * Register new User
+     *
+     * @param RegisterRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function register(RegisterRequest $request)
+    {
+        $dto = new CreateUserDto(
+            name: $request->name,
+            email: $request->email,
+            password: $request->password,
+        );
+
+        $user = $this->userService->create($dto);
+
+        $dto = $this->userService->getUserDto($user);
+
+        return $this->response->success('User created successfully', 201, new UserResource($dto));
+    }
+
+    /**
+     * Login User
+     *
+     * @param LoginRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function login(LoginRequest $request)
+    {
+        $credentials = $request->only(['email', 'password']);
+
+        if (! Auth::attempt($credentials)) {
+            return $this->response->error('Invalid credentials', 401);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        $dto = $this->userService->getUserDto($user);
+
+        return $this->response->success('Login successful', 200, new UserResource($dto));
+    }
+}
+
