@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Api;
+
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Collection;
+
+/**
+ * Response Service interface
+ */
+interface ApiResponseInterface
+{
+    /**
+     * Send success message
+     *
+     * @param string                        $message
+     * @param int                           $code
+     * @param array|Collection|JsonResource $data
+     *
+     * @return JsonResponse
+     */
+    public function success(string $message, int $code = 200, Collection|JsonResource|array $data = []): JsonResponse;
+
+    /**
+     * Send error message
+     *
+     * @param string                        $message
+     * @param int                           $code
+     * @param array|Collection|JsonResource $data
+     *
+     * @return JsonResponse
+     */
+    public function error(string $message, int $code = 500, Collection|JsonResource|array $data = []): JsonResponse;
+}

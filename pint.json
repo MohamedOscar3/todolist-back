@@ -1,0 +1,25 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "phpdoc_to_comment": false,
+        "phpdoc_no_empty_return": false,
+        "phpdoc_var_without_name": false,
+        "no_superfluous_phpdoc_tags": false,
+        "phpdoc_trim": false,
+        "phpdoc_summary": false,
+        "phpdoc_separation": true,
+        "phpdoc_order": true,
+        "phpdoc_align": {
+            "align": "vertical"
+        },
+        "phpdoc_line_span": {
+            "const": "multi",
+            "property": "multi",
+            "method": "multi"
+        },
+        "phpdoc_types_order": {
+            "null_adjustment": "always_last",
+            "sort_algorithm": "none"
+        }
+    }
+}
