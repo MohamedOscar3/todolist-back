@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Dtos\User;
+
+/**
+ * Create User Dto
+ */
+class CreateUserDto
+{
+    /**
+     * Constructor for dto
+     */
+    public function __construct(
+        public string $name,
+        public string $email,
+        public string $password,
+    ) {}
+
+}
