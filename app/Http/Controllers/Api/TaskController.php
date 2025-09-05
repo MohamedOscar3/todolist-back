@@ -131,7 +131,7 @@ class TaskController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
         $data['index'] = $request->input('index', 0);
-        $data['stage'] = TaskStages::BACKLOG->value;
+        $data['stage'] = $request->input('stage', TaskStages::BACKLOG->value);
         $dto = new CreateTaskDto(
             title: $data['title'],
             description: $data['description'],
