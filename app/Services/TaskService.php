@@ -44,6 +44,7 @@ class TaskService
                             ->orWhere('description', 'like', '%'.$keyword.'%');
                     });
                 })
+                ->orderBy('index')
                 ->paginate($perPage);
 
             $result[$stageEnum->value] = [

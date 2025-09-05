@@ -19,12 +19,20 @@ class TaskRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'title' => ['required'],
-            'description' => ['required'],
-            'stage' => ['in:'.implode(',', array_column(TaskStages::cases(), 'value'))],
-            'index' => ['nullable', 'integer', 'min:0'],
+        $rules = [
+            'title' => ['sometimes', 'string'],
+            'description' => ['sometimes', 'string'],
+            'stage' => ['sometimes', 'string', 'in:'.implode(',', array_column(TaskStages::cases(), 'value'))],
+            'index' => ['sometimes', 'nullable', 'integer', 'min:0'],
         ];
+
+        // If this is a POST request (creating a new task), title and description are required
+        if ($this->isMethod('POST')) {
+            $rules['title'][] = 'required';
+            $rules['description'][] = 'required';
+        }
+
+        return $rules;
     }
 
     /**

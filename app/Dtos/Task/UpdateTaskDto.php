@@ -2,28 +2,26 @@
 
 namespace App\Dtos\Task;
 
-use App\Enums\TaskStages;
-
 /**
  * Data Transfer Object for updating an existing task
  *
- * @property string     $title       Task title
- * @property string     $description Task description
- * @property TaskStages $stage       Task stage
- * @property int        $index       Task index within its stage
+ * @property string|null $title       Task title
+ * @property string|null $description Task description
+ * @property string|null $stage       Task stage
+ * @property int|null    $index       Task index within its stage
  */
 class UpdateTaskDto
 {
     /**
-     * @param string $title       Task title
-     * @param string $description Task description
-     * @param string $stage       Task stage
-     * @param int    $index       Task index within its stage
+     * @param string|null $title       Task title
+     * @param string|null $description Task description
+     * @param string|null $stage       Task stage
+     * @param int|null    $index       Task index within its stage
      */
     public function __construct(
-        public readonly string $title,
-        public readonly string $description,
-        public readonly string $stage,
+        public readonly ?string $title = null,
+        public readonly ?string $description = null,
+        public readonly ?string $stage = null,
         public readonly ?int $index = null,
     ) {}
 
@@ -37,9 +35,9 @@ class UpdateTaskDto
     public static function fromArray(array $data): self
     {
         return new self(
-            title: $data['title'],
-            description: $data['description'],
-            stage: $data['stage'],
+            title: $data['title'] ?? null,
+            description: $data['description'] ?? null,
+            stage: $data['stage'] ?? null,
             index: $data['index'] ?? null,
         );
     }
@@ -51,11 +49,19 @@ class UpdateTaskDto
      */
     public function toArray(): array
     {
-        $result = [
-            'title' => $this->title,
-            'description' => $this->description,
-            'stage' => $this->stage,
-        ];
+        $result = [];
+
+        if ($this->title !== null) {
+            $result['title'] = $this->title;
+        }
+
+        if ($this->description !== null) {
+            $result['description'] = $this->description;
+        }
+
+        if ($this->stage !== null) {
+            $result['stage'] = $this->stage;
+        }
 
         if ($this->index !== null) {
             $result['index'] = $this->index;
